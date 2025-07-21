@@ -89,13 +89,12 @@ const PostReview = () => {
     //another incorrect piece of code:    
     // let carmodelsarr = Array.from(retobj.CarModels)
     // setCarmodels(carmodelsarr)
-    //Happy with the dealer... :-)
 
     // replaced the above with:
-    console.log(retobj)
-    if(retobj.status === 200) {
-        setCarmodels(retobj.CarModels)
-      }
+    setCarmodels(retobj.CarModels)
+    // if(retobj.status === 200) {
+    //     setCarmodels(retobj.CarModels)
+    //   }
   }
   useEffect(() => {
     get_dealer();
