@@ -68,11 +68,16 @@ const PostReview = () => {
     });
     const retobj = await res.json();
     
+    // the bellow code was incorrect...
+    // if(retobj.status === 200) {
+    //   let dealerobjs = Array.from(retobj.dealer)
+    //   if(dealerobjs.length > 0)
+    //     setDealer(dealerobjs[0])
+    // }
+    // I replaced the original (above) with:
     if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
-      if(dealerobjs.length > 0)
-        setDealer(dealerobjs[0])
-    }
+        setDealer(retobj.dealer)
+      }
   }
 
   const get_cars = async ()=>{
@@ -80,9 +85,17 @@ const PostReview = () => {
       method: "GET"
     });
     const retobj = await res.json();
-    
-    let carmodelsarr = Array.from(retobj.CarModels)
-    setCarmodels(carmodelsarr)
+
+    //another incorrect piece of code:    
+    // let carmodelsarr = Array.from(retobj.CarModels)
+    // setCarmodels(carmodelsarr)
+    //Happy with the dealer... :-)
+
+    // replaced the above with:
+    console.log(retobj)
+    if(retobj.status === 200) {
+        setCarmodels(retobj.CarModels)
+      }
   }
   useEffect(() => {
     get_dealer();
@@ -94,7 +107,9 @@ const PostReview = () => {
     <div>
       <Header/>
       <div  style={{margin:"5%"}}>
-      <h1 style={{color:"darkblue"}}>{dealer.full_name}</h1>
+      <h1 style={{color:"darkblue"}}>{dealer.full_name || "Loading..."}</h1>
+      {/* <h1 style={{color:"darkblue"}}>{dealer.full_name}</h1> */}
+      <h2>Add a review!</h2>
       <textarea id='review' cols='50' rows='7' onChange={(e) => setReview(e.target.value)}></textarea>
       <div className='input_field'>
       Purchase Date <input type="date" onChange={(e) => setDate(e.target.value)}/>
